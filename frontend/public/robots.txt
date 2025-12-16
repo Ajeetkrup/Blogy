@@ -1,0 +1,47 @@
+# Block AI Training Crawlers
+# This file instructs well-behaved crawlers on which parts of the site they can access
+
+# Allow regular search engines
+User-agent: *
+Allow: /
+
+# Block OpenAI's ChatGPT crawlers
+User-agent: GPTBot
+Disallow: /
+
+User-agent: ChatGPT-User
+Disallow: /
+
+# Block Google's AI training crawler (doesn't affect regular Google Search)
+User-agent: Google-Extended
+Disallow: /
+
+# Block Perplexity AI crawler
+User-agent: PerplexityBot
+Disallow: /
+
+# Block Anthropic's Claude crawler
+User-agent: ClaudeBot
+Disallow: /
+
+User-agent: anthropic-ai
+Disallow: /
+
+# Block Common Crawl (used by some AI companies)
+User-agent: CCBot
+Disallow: /
+
+# Block generic AI crawlers
+User-agent: ai-crawler
+Disallow: /
+
+User-agent: ai-bot
+Disallow: /
+
+# Block Amazon's AI crawler
+User-agent: Amazonbot
+Disallow: /
+
+# Block Cohere AI crawler
+User-agent: cohere-ai
+Disallow: /

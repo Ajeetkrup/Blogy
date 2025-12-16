@@ -1,0 +1,63 @@
+{
+  "x":{
+    "email": "alt.n1-3wcnz5b@yopmail.com",
+    "password": "string1ws22"
+  },
+  "title": "My First Blog Post - Getting Started with Blogging",
+  "content": {
+    "blocks": [
+      {
+        "type": "header",
+        "data": {
+          "text": "Welcome to My Blog",
+          "level": 1
+        }
+      },
+      {
+        "type": "paragraph",
+        "data": {
+          "text": "This is my first blog post! I'm excited to share my thoughts and experiences with you."
+        }
+      },
+      {
+        "type": "header",
+        "data": {
+          "text": "Why I Started Blogging",
+          "level": 2
+        }
+      },
+      {
+        "type": "paragraph",
+        "data": {
+          "text": "Blogging is a great way to express yourself and connect with others who share similar interests."
+        }
+      },
+      {
+        "type": "list",
+        "data": {
+          "style": "unordered",
+          "items": [
+            "Share knowledge and experiences",
+            "Connect with like-minded people",
+            "Improve writing skills",
+            "Build an online presence"
+          ]
+        }
+      },
+      {
+        "type": "header",
+        "data": {
+          "text": "What's Next",
+          "level": 2
+        }
+      },
+      {
+        "type": "paragraph",
+        "data": {
+          "text": "I plan to write regularly about technology, coding, and my learning journey. Stay tuned for more posts!"
+        }
+      }
+    ]
+  },
+  "status": "draft"
+}
