@@ -205,7 +205,7 @@ export default function SignUpPage() {
                 Start your blogging journey today
               </p>
               <div className="space-y-4">
-                {['Free Forever', 'No Credit Card', 'Instant Setup'].map((feature, i) => (
+                {['Free For Limited Time', 'No Credit Card', 'Instant Setup'].map((feature, i) => (
                   <motion.div
                     key={i}
                     className="flex items-center gap-3"
