@@ -105,3 +105,51 @@ This project uses Alembic for database migrations. The migrations are stored in 
 - **Access Token**: JWT, 15 min expiry, returned in JSON response
 - **Refresh Token**: UUID stored in DB, 7 days expiry, HTTP-only secure cookie
 - **Verification/Reset Tokens**: UUID, 24h/1h expiry respectively
+
+## Railway Deployment
+
+This application is configured for deployment on Railway. The following files are included:
+
+- **`Procfile`**: Defines the web process using uvicorn with Railway's `$PORT` variable
+- **`runtime.txt`**: Specifies Python version (3.13)
+- **`start.sh`**: Optional startup script that runs migrations before starting the server
+
+### Deployment Steps
+
+1. **Create a Railway Project**
+   - Go to [Railway](https://railway.app) and create a new project
+   - Choose "Deploy from GitHub repo" and select your repository
+
+2. **Add PostgreSQL Service**
+   - In Railway dashboard, add a PostgreSQL service
+   - Railway will automatically provide `DATABASE_URL` environment variable
+
+3. **Configure Environment Variables**
+   Set these in Railway dashboard (Settings → Variables):
+   - `DATABASE_URL` - Automatically provided by PostgreSQL service
+   - `SECRET_KEY` - Generate a strong secret key for production
+   - `ALGORITHM` - Default: `HS256`
+   - `ACCESS_TOKEN_EXPIRE_MINUTES` - Default: `15`
+   - `REFRESH_TOKEN_EXPIRE_DAYS` - Default: `7`
+   - `MAIL_USERNAME` - Your email address
+   - `MAIL_PASSWORD` - Email app password
+   - `MAIL_FROM` - Sender email address
+   - `MAIL_PORT` - Default: `587`
+   - `MAIL_SERVER` - SMTP server (e.g., `smtp.gmail.com`)
+   - `FRONTEND_URL` - Your deployed frontend URL
+
+4. **Run Database Migrations**
+   - Option A: Use the `start.sh` script by updating Procfile to: `web: bash start.sh`
+   - Option B: Run manually via Railway CLI: `railway run alembic upgrade head`
+
+5. **Generate Public Domain**
+   - In Railway dashboard → Service Settings → Networking → Generate Domain
+
+### Alternative: Using Startup Script for Auto-Migrations
+
+To automatically run migrations on each deployment, update the `Procfile` to:
+```
+web: bash start.sh
+```
+
+This will run `alembic upgrade head` before starting the server.
