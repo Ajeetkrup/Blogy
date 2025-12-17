@@ -16,7 +16,7 @@ interface AnimatedInputProps {
   icon?: ReactNode
   required?: boolean
   autoComplete?: string
-  onBlur?: () => void
+  onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void
   showPasswordToggle?: boolean
   onTogglePassword?: () => void
   showPassword?: boolean
@@ -62,7 +62,7 @@ export default function AnimatedInput(props: AnimatedInputProps) {
           {...props}
           onBlur={(e) => {
             setIsFocused(false)
-            props.onBlur?.()
+            props.onBlur?.(e)
           }}
         />
       </motion.div>

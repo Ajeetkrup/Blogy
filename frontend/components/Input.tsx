@@ -14,7 +14,7 @@ interface InputProps {
   icon?: ReactNode
   required?: boolean
   autoComplete?: string
-  onBlur?: () => void
+  onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void
   showPasswordToggle?: boolean
   onTogglePassword?: () => void
   showPassword?: boolean

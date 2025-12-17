@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, use } from 'react'
 import { useRouter } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
 import TiptapEditor from '@/components/TiptapEditor'
@@ -14,7 +14,8 @@ import PageTransition from '@/components/animations/PageTransition'
 import AnimatedButton from '@/components/animations/AnimatedButton'
 import AuthGuard from '@/components/AuthGuard'
 
-export default function EditBlogPage({ params }: { params: { id: string } }) {
+export default function EditBlogPage({ params }: { params: Promise<{ id: string }> }) {
+    const { id } = use(params)
     const router = useRouter()
     const { user, logout } = useAuthStore()
     const { toast } = useToast()
@@ -31,7 +32,7 @@ export default function EditBlogPage({ params }: { params: { id: string } }) {
     useEffect(() => {
         const fetchBlog = async () => {
             try {
-                const blog = await getBlog(parseInt(params.id))
+                const blog = await getBlog(parseInt(id))
                 setTitle(blog.title)
                 setContent(blog.content)
                 setSources(blog.sources && blog.sources.length > 0 ? blog.sources : [''])
@@ -42,11 +43,11 @@ export default function EditBlogPage({ params }: { params: { id: string } }) {
             }
         }
 
-        if (params.id) {
+        if (id) {
             fetchBlog()
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [params.id])
+    }, [id])
 
     useEffect(() => {
         if (title || content || sources.some(s => s.trim())) {
@@ -74,7 +75,7 @@ export default function EditBlogPage({ params }: { params: { id: string } }) {
 
         try {
             await updateBlog({
-                id: parseInt(params.id),
+                id: parseInt(id),
                 title,
                 content,
                 sources: validSources,

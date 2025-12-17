@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, Suspense } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
 import Link from 'next/link'
@@ -8,7 +8,7 @@ import { verifyEmail } from '@/lib/api'
 import PageTransition from '@/components/animations/PageTransition'
 import AnimatedButton from '@/components/animations/AnimatedButton'
 
-export default function VerifyEmailPage() {
+function VerifyEmailContent() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const [status, setStatus] = useState<'loading' | 'success' | 'error'>('loading')
@@ -315,5 +315,19 @@ export default function VerifyEmailPage() {
         </motion.div>
       </div>
     </PageTransition>
+  )
+}
+
+export default function VerifyEmailPage() {
+  return (
+    <Suspense fallback={
+      <PageTransition>
+        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-400 via-purple-500 to-pink-500">
+          <div className="text-white text-xl">Loading...</div>
+        </div>
+      </PageTransition>
+    }>
+      <VerifyEmailContent />
+    </Suspense>
   )
 }

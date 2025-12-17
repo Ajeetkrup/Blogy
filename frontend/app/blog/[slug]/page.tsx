@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, use } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import TiptapEditor from '@/components/TiptapEditor'
 import { BlogPostSkeleton } from '@/components/SkeletonLoader'
@@ -9,7 +9,8 @@ import { useToast } from '@/hooks/useToast'
 import PageTransition, { StaggerContainer, StaggerItem } from '@/components/animations/PageTransition'
 import Navbar from '@/components/Navbar'
 
-export default function BlogPage({ params }: { params: { slug: string } }) {
+export default function BlogPage({ params }: { params: Promise<{ slug: string }> }) {
+    const { slug } = use(params)
     const { toast } = useToast()
     const [blog, setBlog] = useState<any>(null)
     const [loading, setLoading] = useState(true)
@@ -23,7 +24,7 @@ export default function BlogPage({ params }: { params: { slug: string } }) {
     useEffect(() => {
         const fetchBlog = async () => {
             try {
-                const decodedSlug = decodeURIComponent(params.slug)
+                const decodedSlug = decodeURIComponent(slug)
                 const data = await getBlogBySlug(decodedSlug)
                 setBlog(data)
                 
@@ -42,11 +43,11 @@ export default function BlogPage({ params }: { params: { slug: string } }) {
             }
         }
 
-        if (params.slug) {
+        if (slug) {
             fetchBlog()
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [params.slug])
+    }, [slug])
 
     if (loading) {
         return (
