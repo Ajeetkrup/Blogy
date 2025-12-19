@@ -6,14 +6,16 @@ from app.utils.mask import mask_email, mask_token
 
 settings = get_settings()
 
+# Port 465 requires SSL/TLS from the start (implicit TLS)
+# Port 587 uses STARTTLS (explicit TLS)
 mail_config = ConnectionConfig(
     MAIL_USERNAME=settings.MAIL_USERNAME,
     MAIL_PASSWORD=settings.MAIL_PASSWORD,
     MAIL_FROM=settings.MAIL_FROM,
     MAIL_PORT=settings.MAIL_PORT,
     MAIL_SERVER=settings.MAIL_SERVER,
-    MAIL_STARTTLS=True,
-    MAIL_SSL_TLS=False,
+    MAIL_STARTTLS=settings.MAIL_PORT != 465,  # False for port 465, True for port 587
+    MAIL_SSL_TLS=settings.MAIL_PORT == 465,   # True for port 465, False for port 587
     USE_CREDENTIALS=True,
     VALIDATE_CERTS=True
 )
